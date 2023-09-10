@@ -1,6 +1,8 @@
 rooms
 200:89
+300:40
 courses
 cs200,
+cs500,
 timing
 MWF09,

@@ -9,10 +9,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class InputFileReader {
-    private List<String> inp_1_rooms = new ArrayList<>();
+    public List<String> inp_1_rooms = new ArrayList<>();
     private List<Integer> inp_1_cap = new ArrayList<>();
     private List<String> inp_1_courses = new ArrayList<>();
-    private List<String> inp_1_timing = new ArrayList<>();
+    public List<String> inp_1_timing = new ArrayList<>();
     private List<String> inp_2_courses = new ArrayList<>();
     private List<Integer> inp_2_cap = new ArrayList<>();
     private List<String> inp_2_pref = new ArrayList<>();

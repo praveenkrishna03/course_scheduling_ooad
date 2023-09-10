@@ -6,6 +6,7 @@ import Model.InputDB;
 import Model.InputFileReader;
 import Model.RoomDB;
 import Model.TimingDB;
+import Model.InputFileReader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,16 +19,21 @@ public class MainFrame extends JFrame {
     private CardLayout cardLayout;
     private JPanel contentPanel;
     private UserController userController;
-
+    
 
     public MainFrame() {
         super("Java Swing MVC");
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         Home home = new Home();
+        InputFileReader input_file_reader=new InputFileReader();
+        List<String> input_1_rooms=input_file_reader.inp_1_rooms;
+        List<String> input_1_time=input_file_reader.inp_1_timing;
+        
+        
         input_file_1 input_file_1 = new input_file_1();
         input_file_2 input_file_2 = new input_file_2();
-        //output_file_1 output_file_1=new output_file_1();
+        output_file_1 output_file_1=new output_file_1(input_1_rooms, input_1_time);
         
         
         JScrollPane scrollPane = new JScrollPane(contentPanel);
@@ -42,7 +48,7 @@ public class MainFrame extends JFrame {
         contentPanel.add(home, "home");
         contentPanel.add(input_file_1, "InputFile1");
         contentPanel.add(input_file_2, "InputFile2");
-        //contentPanel.add(output_file_1,"OutputFile1");
+        contentPanel.add(output_file_1,"OutputFile1");
         userController = new UserController(home,input_file_2); 
         
 
@@ -52,7 +58,7 @@ public class MainFrame extends JFrame {
         home.setInputFile1ButtonListener(e -> cardLayout.show(contentPanel, "InputFile1"));
         home.setInputFile2ButtonListener(e->cardLayout.show(contentPanel, "InputFile2"));
         input_file_2.goback(e->cardLayout.show(contentPanel, "home"));
-        //home.setOutputFile1ButtonListener(e->cardLayout.show(contentPanel,"OutputFile1"));
+        home.setOutputFile1ButtonListener(e->cardLayout.show(contentPanel,"OutputFile1"));
         home.setValidateButtonListener(e -> {
             // Call the generateDataFromInputFiles method to generate data
             Object[] data = userController.generateDataFromInputFiles();
