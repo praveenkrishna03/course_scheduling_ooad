@@ -29,6 +29,7 @@ public class UserController {
     private Database database;
     private Home home;
     private input_file_2 input_file_2;
+    public String[][] timetable;
 
     
     public Object[] generateDataFromInputFiles() {
@@ -283,7 +284,7 @@ public class UserController {
     }
 
     // Initialize your timetable matrix
-        String[][] timetable = new String[inp_1_roomsList.size()][inp_1_timingList.size()];
+        timetable = new String[inp_1_roomsList.size()][inp_1_timingList.size()];
         boolean[][] isSlotOccupied = new boolean[inp_1_roomsList.size()][inp_1_timingList.size()];
 
 
@@ -402,7 +403,7 @@ public class UserController {
 
     // Now, you have populated all the required lists based on conditions
     // You can use these lists as needed in your code.
-}
+    }
 
 
     // Now, you have data split into different lists based on your conditions.

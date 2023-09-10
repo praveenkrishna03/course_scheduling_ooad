@@ -108,6 +108,11 @@ public class Home extends JPanel {
         // Assuming you have a JButton named inputFile1Button
         output_1_Button.addActionListener(listener);
     }
+
+    public void setGenerateFile1ButtonListener(ActionListener listener) {
+        // Assuming you have a JButton named inputFile1Button
+        output_1_Button.addActionListener(listener);
+    }
     
     
 

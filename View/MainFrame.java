@@ -19,6 +19,8 @@ public class MainFrame extends JFrame {
     private CardLayout cardLayout;
     private JPanel contentPanel;
     private UserController userController;
+    public String[][] data;
+
     
 
     public MainFrame() {
@@ -61,7 +63,7 @@ public class MainFrame extends JFrame {
             List<String> input_1_rooms=input_file_reader.inp_1_rooms;
             List<String> input_1_time=input_file_reader.inp_1_timing;
             
-            output_file_1 output_file_1=new output_file_1(input_1_rooms, input_1_time);
+            output_file_1 output_file_1=new output_file_1(data);
             contentPanel.add(output_file_1,"OutputFile1");
             
             
@@ -73,6 +75,15 @@ public class MainFrame extends JFrame {
             // Display the generated data in a table or perform further actions
             // For now, let's just print it
             JOptionPane.showMessageDialog(null, "Validation Done", "Done", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+
+        home.setGenerateFile1ButtonListener(e->{
+
+            UserController control=new UserController(null, null);
+            data=control.timetable;
+            JOptionPane.showMessageDialog(null, "Timetable generation Done", "Done", JOptionPane.INFORMATION_MESSAGE);
+
         });
         
         
