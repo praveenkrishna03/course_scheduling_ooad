@@ -16,7 +16,7 @@ public class InputFileReader {
     public List<String> inp_1_timing = new ArrayList<>();
     private List<String> inp_2_courses = new ArrayList<>();
     private List<Integer> inp_2_cap = new ArrayList<>();
-    private List<String> inp_2_pref = new ArrayList<>();
+    private List<List<String>> inp_2_pref = new ArrayList<>();
 
     private boolean isValidRoomNumber(String roomNumber) {
         // Check if roomNumber is a number and within the range 100 to 900
@@ -152,9 +152,13 @@ public class InputFileReader {
                         inp_2_cap.add(Integer.parseInt(capacityStr));
             
                         // Ensure that inp_2_pref contains all the strings from preference
+                        List<String> coursePreferences = new ArrayList<>();
                         for (String pref : preference) {
-                            inp_2_pref.add(pref);
+                            coursePreferences.add(pref.trim());
                         }
+
+                    // Add the list of preferences to inp_2_pref
+                        inp_2_pref.add(coursePreferences);
                     } else {
                         showErrorMessage("Invalid input: " + line);
                     }
@@ -194,7 +198,7 @@ public class InputFileReader {
         return inp_2_cap;
     }
 
-    public List<String> getInp_2_pref() {
+    public List<List<String>> getInp_2_pref() {
         return inp_2_pref;
     }
 

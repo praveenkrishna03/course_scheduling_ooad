@@ -59,12 +59,16 @@ public class MainFrame extends JFrame {
         home.setInputFile2ButtonListener(e->cardLayout.show(contentPanel, "InputFile2"));
         input_file_2.goback(e->cardLayout.show(contentPanel, "home"));
         home.setOutputFile1ButtonListener(e->{
-            InputFileReader input_file_reader=new InputFileReader();
-            List<String> input_1_rooms=input_file_reader.inp_1_rooms;
-            List<String> input_1_time=input_file_reader.inp_1_timing;
+
+            UserController control=new UserController(home, input_file_2);
+            //String[][] datas= control.getTimetable();
+            //output_file_1 output_file_1=new output_file_1(datas);
+
+            //contentPanel.add(output_file_1,"OutputFile1");
+
             
-            output_file_1 output_file_1=new output_file_1(data);
-            contentPanel.add(output_file_1,"OutputFile1");
+            //output_file_1 output_file_1=new output_file_1(datas);
+            //contentPanel.add(output_file_1,"OutputFile1");
             
             
             cardLayout.show(contentPanel,"OutputFile1");
@@ -80,10 +84,25 @@ public class MainFrame extends JFrame {
 
         home.setGenerateFile1ButtonListener(e->{
 
-            UserController control=new UserController(null, null);
-            data=control.timetable;
-            JOptionPane.showMessageDialog(null, "Timetable generation Done", "Done", JOptionPane.INFORMATION_MESSAGE);
+            InputFileReader inputFileReader=new InputFileReader();
+            List<String> inp_1_roomsList=inputFileReader.getInp_1_rooms();
+            List<Integer> inp_1_capList=inputFileReader.getInp_1_cap();
+            List<String> inp_1_coursesList=inputFileReader.getInp_1_courses();
+            List<String> inp_1_timingList=inputFileReader.getInp_1_timing();
+            List<String> inp_2_coursesList=inputFileReader.getInp_2_courses();
+            List<Integer> inp_2_capList=inputFileReader.getInp_2_cap();
+            List<List<String>> inp_2_prefList=inputFileReader.getInp_2_pref();
 
+            UserController control=new UserController(home, input_file_2);
+            String[][] datas= control.Schedule(inp_1_roomsList, inp_1_capList, inp_1_coursesList, inp_1_timingList, inp_2_coursesList, inp_2_capList, inp_2_prefList);
+            //System.out.println(datas);
+            //System.out.println(data[0].length);
+            output_file_1 output_file_1=new output_file_1(datas);
+
+            contentPanel.add(output_file_1,"OutputFile1");
+
+            JOptionPane.showMessageDialog(null, "Timetable generation Done", "Done", JOptionPane.INFORMATION_MESSAGE);
+            cardLayout.show(contentPanel,"OutputFile1");
         });
         
         

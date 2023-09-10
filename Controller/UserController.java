@@ -29,7 +29,7 @@ public class UserController {
     private Database database;
     private Home home;
     private input_file_2 input_file_2;
-    public String[][] timetable;
+    
 
     
     public Object[] generateDataFromInputFiles() {
@@ -211,7 +211,7 @@ public class UserController {
         database.saveInput(databaseFile, input);
     }
     
-    public void Schedule(List<String> inp_1_roomsList, List<Integer> inp_1_capList, List<String> inp_1_coursesList, List<String> inp_1_timingList, List<String> inp_2_coursesList, List<Integer> inp_2_capList, List<List<String>> inp_2_prefList) {
+    public String[][] Schedule(List<String> inp_1_roomsList, List<Integer> inp_1_capList, List<String> inp_1_coursesList, List<String> inp_1_timingList, List<String> inp_2_coursesList, List<Integer> inp_2_capList, List<List<String>> inp_2_prefList) {
     // Create lists for PG courses with and without preferences
     List<String> PG_with_no_pref_courseList = new ArrayList<>();
     List<Integer> PG_with_no_pref_capList = new ArrayList<>();
@@ -284,7 +284,7 @@ public class UserController {
     }
 
     // Initialize your timetable matrix
-        timetable = new String[inp_1_roomsList.size()][inp_1_timingList.size()];
+        String[][] timetable = new String[inp_1_roomsList.size()][inp_1_timingList.size()];
         boolean[][] isSlotOccupied = new boolean[inp_1_roomsList.size()][inp_1_timingList.size()];
 
 
@@ -400,10 +400,11 @@ public class UserController {
 
 
 
-
+        return timetable;
     // Now, you have populated all the required lists based on conditions
     // You can use these lists as needed in your code.
     }
+
 
 
     // Now, you have data split into different lists based on your conditions.
