@@ -27,6 +27,11 @@ public class InputFileReader {
         }
     }
 
+    private boolean isValidTiming(String timing) {
+        // Check if the timing matches the specified format
+        return timing.matches("^(MWF\\d{2}(:\\d{2})?|TT\\d{2}(:\\d{2})?)$|^\\d{1,2}$");
+    }
+
     private boolean isValidCapacity(String capacity) {
         // Check if capacity is a number and within the range 10 to 90
         try {
@@ -36,6 +41,12 @@ public class InputFileReader {
             return false;
         }
     }
+
+    private boolean isValidCourse(String course) {
+        // Check if course has 5 characters, starting with 'c' and 's', and followed by 3 digits
+        return course.length() == 5 && course.charAt(0) == 'c' && course.charAt(1) == 's' && course.substring(2).matches("\\d{3}");
+    }
+    
 
     private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
@@ -63,7 +74,7 @@ public class InputFileReader {
                     readingRooms = false;
                     readingCourses = true;
                     continue;
-                } else if (line.equals("times")) {
+                } else if (line.equals("timing")) {
                     readingCourses = false;
                     readingTimes = true;
                     continue;
@@ -83,17 +94,34 @@ public class InputFileReader {
                 } else if (readingCourses) {
                     String[] courses = line.split(",");
                     for (String course : courses) {
-                        inp_1_courses.add(course.trim());
-                    }
+                        if (isValidCourse(course.trim())) {
+                            inp_1_courses.add(course.trim());
+                        } else {
+                            showErrorMessage("Invalid course: " + course);
+                            return; // Exit the method on validation failure
+                            }
+                        }
                 } else if (readingTimes) {
                     String[] times = line.split(",");
+                    boolean validTimings = true;
                     for (String time : times) {
-                        inp_1_timing.add(time.trim());
+                        if (!isValidTiming(time.trim())) {
+                            validTimings = false;
+                            break; // Exit the loop on validation failure
+                        }
+                    }
+
+                    if (validTimings) {
+                        for (String time : times) {
+                            inp_1_timing.add(time.trim());
+                        }
+                    } else {
+                        showErrorMessage("Invalid timing(s): " + line);
                     }
                 }
                 
             }
-            System.out.println("Completed_1");
+            //System.out.println("Completed_1");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,20 +132,23 @@ public class InputFileReader {
             String line;
     
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(", "); // Split by ", " to match the specified format
+                String[] parts = line.split(": "); // Split by ": " to match the specified format
                 if (parts.length >= 3) {
-                    inp_2_courses.add(parts[0].trim());
-                    inp_2_cap.add(Integer.parseInt(parts[1].trim()));
-    
-                    // Add preferences if they exist
-                    if (parts.length > 2) {
-                        inp_2_pref.add(parts[2].trim());
+                    String course = parts[0].trim();
+                    String capacityStr = parts[1].trim();
+                    String preference = parts[2].trim();
+            
+                    if (isValidCourse(course) && isValidCapacity(capacityStr) && isValidTiming(preference)) {
+                        inp_2_courses.add(course);
+                        inp_2_cap.add(Integer.parseInt(capacityStr));
+                        inp_2_pref.add(preference);
                     } else {
-                        inp_2_pref.add(""); // No preferences
+                        showErrorMessage("Invalid input: " + line);
                     }
                 }
             }
-            System.out.println("Completed_2");
+            
+            //System.out.println("Completed_2");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
 rooms
 200:89
 courses
-zfb,
+cs200,
 timing
-xfb,
+MWF09,
