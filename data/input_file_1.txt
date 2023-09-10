@@ -1,8 +1,7 @@
 rooms
-200:89
-300:40
+102:45
+103:45
 courses
-cs200,
-cs500,
+cs123,
 timing
-MWF09,
+MWF4,MWF11,

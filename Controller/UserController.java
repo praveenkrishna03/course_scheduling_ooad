@@ -210,6 +210,51 @@ public class UserController {
         database.saveInput(databaseFile, input);
     }
     
+    public void Schedule(
+        List<String> inp_1_roomsList, 
+        List<Integer> inp_1_capList, 
+        List<String> inp_1_coursesList, 
+        List<String> inp_1_timingList, 
+        List<String> inp_2_coursesList, 
+        List<Integer> inp_2_capList, 
+        List<String> inp_2_prefList
+) {
+    List<String> PG_with_no_pref_courseList = new ArrayList<>();
+    List<Integer> PG_with_no_pref_capList = new ArrayList<>();
+    List<String> PG_with_no_pref_prefList = new ArrayList<>();
+
+    List<String> PG_with_pref_courseList = new ArrayList<>();
+    List<Integer> PG_with_pref_capList = new ArrayList<>();
+    List<String> PG_with_pref_prefList = new ArrayList<>();
+
+    // Iterate through inp_2_coursesList and inp_2_prefList using a loop
+    for (int i = 0; i < inp_2_coursesList.size(); i++) {
+        String course = inp_2_coursesList.get(i);
+        String pref = inp_2_prefList.get(i);
+        int cap = inp_2_capList.get(i);
+
+        // Check the conditions and move data to the appropriate lists
+        if (course.length() >= 3 && Character.isDigit(course.charAt(2)) && Integer.parseInt(course.substring(2, 3)) >= 6) {
+            if (pref.isEmpty()) {
+                PG_with_no_pref_courseList.add(course);
+                PG_with_no_pref_capList.add(cap);
+                PG_with_no_pref_prefList.add(pref);
+            } else {
+                PG_with_pref_courseList.add(course);
+                PG_with_pref_capList.add(cap);
+                PG_with_pref_prefList.add(pref);
+            }
+        } else {
+            PG_with_pref_courseList.add(course);
+            PG_with_pref_capList.add(cap);
+            PG_with_pref_prefList.add(pref);
+        }
+    }
+
+    // Now, you have data split into different lists based on your conditions.
+    // You can perform further operations as needed.
+}
+
      
 
     
