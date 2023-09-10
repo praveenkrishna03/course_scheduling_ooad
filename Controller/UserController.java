@@ -34,8 +34,6 @@ public class UserController {
     
 
 
-    private InputDetailsManager inputDetailsManager;
-    
 
     public UserController(Home home, UserDetails userDetails, input_file_2 input_file_2) {
         
@@ -44,7 +42,6 @@ public class UserController {
         this.userDetails = userDetails;
         this.input_file_2 = input_file_2;
 
-        inputDetailsManager = new InputDetailsManager();
 
         // submit user
         this.input_file_2.submitInput(e -> {
@@ -208,17 +205,6 @@ public class UserController {
 
     
 
-    public List<InputDB> loadInputDetails() {
-        // Load and deserialize input details from a file
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FilePath_ip_2))) {
-            inputDetailsManager = (InputDetailsManager) inputStream.readObject();
-            System.out.println("Input details loaded from file: " + FilePath_ip_2);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return inputDetailsManager.getInputDetailsList();
-    }
     
     
     
