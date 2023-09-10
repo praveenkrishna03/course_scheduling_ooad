@@ -134,6 +134,7 @@ public class Database {
                 bufferedWriter.write(saveData);
                 bufferedWriter.newLine();
                 inputentry++;
+                    JOptionPane.showMessageDialog(null, "Succesfully added", "added", inputentry, null);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Maximum Constraint Reached", "Error", inputentry, null);
