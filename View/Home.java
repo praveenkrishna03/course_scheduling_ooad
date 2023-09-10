@@ -89,6 +89,11 @@ public class Home extends JPanel {
         input_file_2_Button.addActionListener(listener);
     }
 
+    public void setGenerateButtonListener(ActionListener listener) {
+        // Assuming you have a JButton named inputFile1Button
+        generate_Button.addActionListener(listener);
+    }
+
     
     
 

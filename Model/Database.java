@@ -73,11 +73,11 @@ public class Database {
                 //bufferedWriter.newLine();
                 for (RoomDB room : roomsArrayList) {
                     bufferedWriter.newLine();
-                    String save_data_room = "    "+room.getRoom() + ":" + room.getCapacity();
+                    String save_data_room = room.getRoom() + ":" + room.getCapacity();
                     bufferedWriter.write(save_data_room);
                     
                 }
-                bufferedWriter.write(";");
+                //bufferedWriter.write(";");
                 bufferedWriter.newLine();
                 bufferedWriter.close();
             } catch (IOException e) {
@@ -90,13 +90,13 @@ public class Database {
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
                 bufferedWriter.write("courses");
                 bufferedWriter.newLine();
-                bufferedWriter.write("    ");
+                //bufferedWriter.write("    ");
                 for (CourseDB course : courseArrayList) {
                     
                     String save_data_course =course.getCourse() + ",";
                     bufferedWriter.write(save_data_course);
                 }
-                bufferedWriter.write(";");
+                //bufferedWriter.write(";");
                 bufferedWriter.newLine();
 
                 bufferedWriter.close();
@@ -110,13 +110,13 @@ public class Database {
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
                 bufferedWriter.write("timing");
                 bufferedWriter.newLine();
-                bufferedWriter.write("    ");
+                //bufferedWriter.write("    ");
                 for (TimingDB timing : timingArrayList) {
                     
                     String save_data_timing =timing.getTiming() + ",";
                     bufferedWriter.write(save_data_timing);
                 }
-                bufferedWriter.write(";");
+                //bufferedWriter.write(";");
                 bufferedWriter.newLine();
 
                 bufferedWriter.close();

@@ -3,6 +3,7 @@ package Controller;
 import Model.CourseDB;
 import Model.Database;
 import Model.InputDB;
+import Model.InputFileReader;
 import Model.RoomDB;
 import Model.TimingDB;
 import View.Home;
@@ -32,7 +33,16 @@ public class UserController {
     private UserDetails userDetails;
 
     
+    public Object[] generateDataFromInputFiles() {
+        // Create an instance of InputFileReader
+        InputFileReader inputFileReader = new InputFileReader();
 
+        // Read and process data from inputfile1.txt and inputfile2.txt
+        Object[] data = new Object[2];
+        data[0] = inputFileReader.readInputFile(); // Call the method to read inputfile1.txt
+        data[1] = inputFileReader.readInputFile(); // Call the method to read inputfile2.txt
+        return data;
+    }
 
 
     public UserController(Home home, UserDetails userDetails, input_file_2 input_file_2) {
@@ -42,6 +52,8 @@ public class UserController {
         this.userDetails = userDetails;
         this.input_file_2 = input_file_2;
 
+
+        
 
         // submit user
         this.input_file_2.submitInput(e -> {
