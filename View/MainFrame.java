@@ -49,6 +49,7 @@ public class MainFrame extends JFrame {
 
         home.setInputFile1ButtonListener(e -> cardLayout.show(contentPanel, "InputFile1"));
         home.setInputFile2ButtonListener(e->cardLayout.show(contentPanel, "InputFile2"));
+        input_file_2.goback(e->cardLayout.show(contentPanel, "home"));
 
         input_file_1.setsubmitButtonListener(e -> {
             // Collect room details from the input_file_1 class and send them to the controller

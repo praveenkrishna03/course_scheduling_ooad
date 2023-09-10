@@ -25,7 +25,7 @@ public class input_file_2 extends JPanel {
 
         addButton = new JButton("Add Input");
         addButton.setPreferredSize(new Dimension(278, 40));
-        goback = new JButton("View All Inputs");
+        goback = new JButton("Go back");
         goback.setPreferredSize(new Dimension(278, 40));
 
         // space between fields
