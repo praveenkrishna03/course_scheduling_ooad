@@ -210,24 +210,24 @@ public class UserController {
         database.saveInput(databaseFile, input);
     }
     
-    public void Schedule(List<String> inp_1_roomsList, List<Integer> inp_1_capList, List<String> inp_1_coursesList, List<String> inp_1_timingList, List<String> inp_2_coursesList, List<Integer> inp_2_capList, List<String> inp_2_prefList) {
+    public void Schedule(List<String> inp_1_roomsList, List<Integer> inp_1_capList, List<String> inp_1_coursesList, List<String> inp_1_timingList, List<String> inp_2_coursesList, List<Integer> inp_2_capList, List<List<String>> inp_2_prefList) {
     // Create lists for PG courses with and without preferences
     List<String> PG_with_no_pref_courseList = new ArrayList<>();
     List<Integer> PG_with_no_pref_capList = new ArrayList<>();
     List<String> PG_with_pref_courseList = new ArrayList<>();
     List<Integer> PG_with_pref_capList = new ArrayList<>();
-    List<String> PG_with_pref_prefList = new ArrayList<>();
+    List<List<String>> PG_with_pref_prefList = new ArrayList<>();
 
     // Create lists for UG courses with and without preferences
     List<String> UG_with_no_pref_courseList = new ArrayList<>();
     List<Integer> UG_with_no_pref_capList = new ArrayList<>();
     List<String> UG_with_pref_courseList = new ArrayList<>();
     List<Integer> UG_with_pref_capList = new ArrayList<>();
-    List<String> UG_with_pref_prefList = new ArrayList<>();
+    List<List<String>> UG_with_pref_prefList = new ArrayList<>();
 
     for (int i = 0; i < inp_2_coursesList.size(); i++) {
         String course = inp_2_coursesList.get(i);
-        String pref = inp_2_prefList.get(i);
+        List<String> pref = inp_2_prefList.get(i);
         int cap = inp_2_capList.get(i);
 
         char thirdChar = course.charAt(2);
@@ -253,6 +253,32 @@ public class UserController {
             UG_with_pref_capList.add(cap);
             UG_with_pref_prefList.add(pref);
         }
+
+        List<List<Integer>> PG_with_pref_list_num = new ArrayList<>();
+    List<List<Integer>> UG_with_pref_list_num = new ArrayList<>();
+
+    for (List<String> prefer : PG_with_pref_prefList) {
+        List<Integer> prefIndices = new ArrayList<>();
+        for (String timing : prefer) {
+            int index = inp_1_timingList.indexOf(timing);
+            if (index != -1) {
+                prefIndices.add(index);
+            }
+        }
+        PG_with_pref_list_num.add(prefIndices);
+    }
+
+    for (List<String> prefer : UG_with_pref_prefList) {
+        List<Integer> prefIndices = new ArrayList<>();
+        for (String timing : prefer) {
+            int index = inp_1_timingList.indexOf(timing);
+            if (index != -1) {
+                prefIndices.add(index);
+            }
+        }
+        UG_with_pref_list_num.add(prefIndices);
+    }
+
     }
 
     // Now, you have populated all the required lists based on conditions
