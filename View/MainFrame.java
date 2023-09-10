@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         Home home = new Home();
         input_file_1 input_file_1 = new input_file_1();
         input_file_2 input_file_2 = new input_file_2();
-        InputFileReader input_file_reader=new InputFileReader();
+        
         
 
         UserDetails userDetails = new UserDetails();
@@ -53,14 +53,12 @@ public class MainFrame extends JFrame {
         home.setInputFile1ButtonListener(e -> cardLayout.show(contentPanel, "InputFile1"));
         home.setInputFile2ButtonListener(e->cardLayout.show(contentPanel, "InputFile2"));
         input_file_2.goback(e->cardLayout.show(contentPanel, "home"));
-        home.setGenerateButtonListener(e -> {
+        home.setValidateButtonListener(e -> {
             // Call the generateDataFromInputFiles method to generate data
             Object[] data = userController.generateDataFromInputFiles();
             // Display the generated data in a table or perform further actions
             // For now, let's just print it
-            System.out.println("Generated Data from Input Files:");
-            System.out.println("InputFile1 Data: " + data[0]);
-            System.out.println("InputFile2 Data: " + data[1]);
+            JOptionPane.showMessageDialog(null, "Validation succesfull", "No Error", JOptionPane.INFORMATION_MESSAGE);
         });
         
         

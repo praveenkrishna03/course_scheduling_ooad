@@ -8,6 +8,7 @@ public class Home extends JPanel {
 
     private JButton input_file_1_Button;
     private JButton input_file_2_Button;
+    private JButton validate_Button;
     private JButton generate_Button;
     private JButton output_1_Button;
     private JButton output_2_Button;
@@ -21,6 +22,8 @@ public class Home extends JPanel {
         input_file_2_Button.setPreferredSize(new Dimension(278, 40));
         generate_Button=new JButton("Generate");
         generate_Button.setPreferredSize(new Dimension(100, 40));
+        validate_Button=new JButton("Validate");
+        validate_Button.setPreferredSize(new Dimension(100, 40));
         output_1_Button=new JButton("Output_1");
         output_1_Button.setPreferredSize(new Dimension(278, 40));
         output_2_Button=new JButton("Output_2");
@@ -57,22 +60,29 @@ public class Home extends JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = buttonInset;
 
-        add(generate_Button,gridBagConstraints);
+        add(validate_Button,gridBagConstraints);
 
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = buttonInset;
 
-        add(output_1_Button,gridBagConstraints);
+
+        add(generate_Button,gridBagConstraints);
 
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.insets = buttonInset;
 
-        add(output_2_Button,gridBagConstraints);
+        add(output_1_Button,gridBagConstraints);
 
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = buttonInset;
+
+        add(output_2_Button,gridBagConstraints);
+
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = buttonInset;
 
         add(output_3_Button,gridBagConstraints);
@@ -89,9 +99,9 @@ public class Home extends JPanel {
         input_file_2_Button.addActionListener(listener);
     }
 
-    public void setGenerateButtonListener(ActionListener listener) {
+    public void setValidateButtonListener(ActionListener listener) {
         // Assuming you have a JButton named inputFile1Button
-        generate_Button.addActionListener(listener);
+        validate_Button.addActionListener(listener);
     }
 
     
