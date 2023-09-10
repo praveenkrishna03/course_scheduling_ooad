@@ -1,6 +1,0 @@
-rooms
-    shraqh:aehbrs;
-courses
-    nsfn,nsfn,;
-timing
-    sfnfxn,;

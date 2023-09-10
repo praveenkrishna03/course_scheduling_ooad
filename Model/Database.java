@@ -134,10 +134,10 @@ public class Database {
                 bufferedWriter.write(saveData);
                 bufferedWriter.newLine();
                 inputentry++;
-                    JOptionPane.showMessageDialog(null, "Succesfully added", "added", inputentry, null);
+                    JOptionPane.showMessageDialog(null, "Succesfully added", "added", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Maximum Constraint Reached", "Error", inputentry, null);
+                    JOptionPane.showMessageDialog(null, "Maximum Constraint Reached", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
