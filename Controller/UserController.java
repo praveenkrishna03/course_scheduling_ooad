@@ -7,7 +7,6 @@ import Model.InputFileReader;
 import Model.RoomDB;
 import Model.TimingDB;
 import View.Home;
-import View.UserDetails;
 import View.input_file_2;
 
 import javax.swing.*;
@@ -30,7 +29,6 @@ public class UserController {
     private Database database;
     private Home home;
     private input_file_2 input_file_2;
-    private UserDetails userDetails;
 
     
     public Object[] generateDataFromInputFiles() {
@@ -45,11 +43,10 @@ public class UserController {
     }
 
 
-    public UserController(Home home, UserDetails userDetails, input_file_2 input_file_2) {
+    public UserController(Home home, input_file_2 input_file_2) {
         
         this.database = new Database();
         this.home = home;
-        this.userDetails = userDetails;
         this.input_file_2 = input_file_2;
 
 

@@ -104,6 +104,10 @@ public class Home extends JPanel {
         validate_Button.addActionListener(listener);
     }
 
+    public void setOutputFile1ButtonListener(ActionListener listener) {
+        // Assuming you have a JButton named inputFile1Button
+        output_1_Button.addActionListener(listener);
+    }
     
     
 

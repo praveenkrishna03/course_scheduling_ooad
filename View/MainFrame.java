@@ -27,10 +27,9 @@ public class MainFrame extends JFrame {
         Home home = new Home();
         input_file_1 input_file_1 = new input_file_1();
         input_file_2 input_file_2 = new input_file_2();
+        //output_file_1 output_file_1=new output_file_1();
         
         
-
-        UserDetails userDetails = new UserDetails();
         JScrollPane scrollPane = new JScrollPane(contentPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(400, 400));
@@ -41,10 +40,10 @@ public class MainFrame extends JFrame {
         // Initialize the controller and add views to the content panel
         
         contentPanel.add(home, "home");
-        contentPanel.add(userDetails, "user details");
         contentPanel.add(input_file_1, "InputFile1");
         contentPanel.add(input_file_2, "InputFile2");
-        userController = new UserController(home, userDetails,input_file_2); 
+        //contentPanel.add(output_file_1,"OutputFile1");
+        userController = new UserController(home,input_file_2); 
         
 
         // Configure the initial view
@@ -53,6 +52,7 @@ public class MainFrame extends JFrame {
         home.setInputFile1ButtonListener(e -> cardLayout.show(contentPanel, "InputFile1"));
         home.setInputFile2ButtonListener(e->cardLayout.show(contentPanel, "InputFile2"));
         input_file_2.goback(e->cardLayout.show(contentPanel, "home"));
+        //home.setOutputFile1ButtonListener(e->cardLayout.show(contentPanel,"OutputFile1"));
         home.setValidateButtonListener(e -> {
             // Call the generateDataFromInputFiles method to generate data
             Object[] data = userController.generateDataFromInputFiles();
