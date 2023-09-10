@@ -7,9 +7,18 @@ import Model.RoomDB;
 import Model.TimingDB;
 import View.Home;
 import View.UserDetails;
+import View.input_file_2;
 
 import javax.swing.*;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +28,54 @@ public class UserController {
     private String FilePath_ip_2 = "data\\input_file_2.txt";
     private Database database;
     private Home home;
+    private input_file_2 input_file_2;
     private UserDetails userDetails;
 
-    public UserController(Home home, UserDetails userDetails) {
+    
+
+
+    private InputDetailsManager inputDetailsManager;
+    
+
+    public UserController(Home home, UserDetails userDetails, input_file_2 input_file_2) {
+        
         this.database = new Database();
         this.home = home;
         this.userDetails = userDetails;
+        this.input_file_2 = input_file_2;
+
+        inputDetailsManager = new InputDetailsManager();
 
         // submit user
+        this.input_file_2.submitInput(e -> {
+            String course = input_file_2.getCourse().trim();
+            String capacity = input_file_2.getCapacity().trim();
+            String preferences = input_file_2.getPreferences().trim();
+        
+            // Simple validations
+            if (course.isEmpty() || capacity.isEmpty() || preferences.isEmpty()) {
+                JOptionPane.showMessageDialog(input_file_2, "All fields (Course, Capacity, Preferences) are required.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            // Create an InputDB object with the collected data
+            InputDB input = new InputDB(course, capacity, preferences);
+        
+            // Add input to the database
+            this.database.addInputCourse(input);
+        
+            // Save the input to the appropriate file
+            File inputFile = new File(FilePath_ip_2);
+            this.database.saveInput(inputFile, input);
 
+        
+            // Reset input fields
+            input_file_2.reset(true);
+        });
+        
+        }
+        
 
         
         /* 
@@ -58,8 +106,11 @@ public class UserController {
             this.userDetails.getUsers(this.database.loadUsers(new File(databaseFile)));
         });
         */
-    }
+    
     // Inside UserController.java
+
+
+    
 
     public void saveRoomDetails(List<RoomDB> roomDetailsList) {
         // Create room objects and add them to the database
@@ -144,40 +195,31 @@ public class UserController {
     }
     */
 
-    public void saveInputDetails(List<InputDB> inputDetailsList) {
-        // Separate the input details into separate lists
-        List<InputDB> courseList = new ArrayList<>();
-        List<InputDB> capacityList = new ArrayList<>();
-        List<InputDB> preferencesList = new ArrayList<>();
+    public void saveInputDetails(InputDB input) {
+        // Add the input details to the database
+        database.addInputCourse(input);
     
-        for (InputDB inputDetails : inputDetailsList) {
-            // Split the input details into separate objects
-            InputDB course = new InputDB(inputDetails.getInputCourse(), null, null);
-            InputDB capacity = new InputDB(null, inputDetails.getInputCapacity(), null);
-            InputDB preferences = new InputDB(null, null, inputDetails.getInputPreferences());
-    
-            courseList.add(course);
-            capacityList.add(capacity);
-            preferencesList.add(preferences);
-        }
-    
-        // Add the split lists to the database
-        for (InputDB course : courseList) {
-            database.addInputCourse(course);
-        }
-    
-        for (InputDB capacity : capacityList) {
-            database.addInputCapacity(capacity);
-        }
-    
-        for (InputDB preferences : preferencesList) {
-            database.addInputPreferences(preferences);
-        }
-    
-        // Save the input details to the database file
+        // Save the input details to the database file for Input File 2
         File databaseFile = new File(FilePath_ip_2);
-        database.saveInput(databaseFile);
+        database.saveInput(databaseFile, input);
     }
+    
+     
+
+    
+
+    public List<InputDB> loadInputDetails() {
+        // Load and deserialize input details from a file
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FilePath_ip_2))) {
+            inputDetailsManager = (InputDetailsManager) inputStream.readObject();
+            System.out.println("Input details loaded from file: " + FilePath_ip_2);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return inputDetailsManager.getInputDetailsList();
+    }
+    
     
     
     

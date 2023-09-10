@@ -16,6 +16,7 @@ public class MainFrame extends JFrame {
     // Card layout for switching view
     private CardLayout cardLayout;
     private JPanel contentPanel;
+    private UserController userController;
 
 
     public MainFrame() {
@@ -35,11 +36,12 @@ public class MainFrame extends JFrame {
         setContentPane(scrollPane);
 
         // Initialize the controller and add views to the content panel
-        UserController userController = new UserController(home, userDetails); 
+        
         contentPanel.add(home, "home");
         contentPanel.add(userDetails, "user details");
         contentPanel.add(input_file_1, "InputFile1");
         contentPanel.add(input_file_2, "InputFile2");
+        userController = new UserController(home, userDetails,input_file_2); 
         
 
         // Configure the initial view
@@ -107,26 +109,32 @@ public class MainFrame extends JFrame {
     // Notify the controller to save the input details
     userController.saveInputDetails(inputList);
     */
-
-    input_file_2.setsubmitButtonListener(e -> {
-        // Collect input details from the input_file_2 class and send them to the controller
-        List<InputDB> inputList = new ArrayList<>();
-List<JTextField> courseFields = input_file_2.getCourseFields();
-List<JTextField> capacityFields = input_file_2.getCapacityFields();
-List<JTextField> preferenceFields = input_file_2.getPreferenceFields();
-
-for (int i = 0; i < courseFields.size(); i++) {
-    String courseText = courseFields.get(i).getText();
-    String capacityText = capacityFields.get(i).getText();
-    String preferenceText = preferenceFields.get(i).getText();
-
-    inputList.add(new InputDB(courseText, capacityText, preferenceText));
-}
-
-// Notify the controller to save the input details
-userController.saveInputDetails(inputList);
-
-    });
+    /* 
+    input_file_2.submitInput(e -> {
+        String course = input_file_2.getCourse().trim();
+        String capacity = input_file_2.getCapacity().trim();
+        String preference = input_file_2.getPreferences().trim();
+    
+        // Check if any of the fields are empty
+        if (course.isEmpty() || capacity.isEmpty() || preference.isEmpty()) {
+            JOptionPane.showMessageDialog(input_file_2, "All fields (Course, Capacity, Preference) are required.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Create an InputDB object with the collected data
+            InputDB input = new InputDB(course, capacity, preference);
+    
+            // Notify the controller to save the input details
+            userController.saveInputDetails(input);
+    
+            // Clear the input fields after successfully saving
+            input_file_2.reset(true);
+        }
+    });*/
+    
+    
+    
+    
+    
     
     
 

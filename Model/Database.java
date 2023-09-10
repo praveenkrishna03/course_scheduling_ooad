@@ -2,8 +2,11 @@ package Model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import View.input_file_2;
 
 public class Database {
 
@@ -15,6 +18,8 @@ public class Database {
     private ArrayList<InputDB> InputCapacityArrayList;
     private ArrayList<InputDB> InputPreferencesArrayList;
     private ArrayList<InputDB> InputArrayList;
+    private int inputentry=0;
+
 
     public Database() {
         roomsArrayList = new ArrayList<>();
@@ -24,6 +29,7 @@ public class Database {
         InputCapacityArrayList = new ArrayList<>();
         InputPreferencesArrayList = new ArrayList<>();
         InputArrayList=new ArrayList<>();
+        input_file_2 input_file_2 = new input_file_2();
  
     }
 
@@ -119,17 +125,27 @@ public class Database {
             }
         }
 
-        public void saveInput(File file) {
+        public void saveInput(File file, InputDB input) {
             try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
-                for (InputDB input : InputArrayList) {
-                    String save_data = input.getInputCourse() + ", " + input.getInputCapacity() + ", " + input.getInputPreferences();
-                    bufferedWriter.write(save_data);
-                    bufferedWriter.newLine();
+
+                if(inputentry<20){
+
+                String saveData = input.getInputCourse() + ", " + input.getInputCapacity() + ", " + input.getInputPreferences();
+                bufferedWriter.write(saveData);
+                bufferedWriter.newLine();
+                inputentry++;
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Maximum Constraint Reached", "Error", inputentry, null);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        
+        
+
         
 
         
