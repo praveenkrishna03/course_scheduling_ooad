@@ -149,12 +149,16 @@ public class UserController {
         List<InputDB> courseList = new ArrayList<>();
         List<InputDB> capacityList = new ArrayList<>();
         List<InputDB> preferencesList = new ArrayList<>();
-        
     
         for (InputDB inputDetails : inputDetailsList) {
-            courseList.add(new InputDB(inputDetails.getInputCourse(), FilePath_ip_1, FilePath_ip_1));
-            capacityList.add(new InputDB(FilePath_ip_1,inputDetails.getInputCapacity(), FilePath_ip_1));
-            preferencesList.add(new InputDB(FilePath_ip_1,FilePath_ip_1,inputDetails.getInputPreferences()));
+            // Split the input details into separate objects
+            InputDB course = new InputDB(inputDetails.getInputCourse(), null, null);
+            InputDB capacity = new InputDB(null, inputDetails.getInputCapacity(), null);
+            InputDB preferences = new InputDB(null, null, inputDetails.getInputPreferences());
+    
+            courseList.add(course);
+            capacityList.add(capacity);
+            preferencesList.add(preferences);
         }
     
         // Add the split lists to the database
@@ -174,6 +178,10 @@ public class UserController {
         File databaseFile = new File(FilePath_ip_2);
         database.saveInput(databaseFile);
     }
+    
+    
+    
+    
     
 
     

@@ -90,7 +90,7 @@ public class MainFrame extends JFrame {
             cardLayout.show(contentPanel, "home");
 
         });
-
+        /* 
         List<InputDB> inputList = new ArrayList<>();
     List<JTextField> courseFields = input_file_2.getCourseFields();
     List<JTextField> capacityFields = input_file_2.getCapacityFields();
@@ -106,6 +106,29 @@ public class MainFrame extends JFrame {
             
     // Notify the controller to save the input details
     userController.saveInputDetails(inputList);
+    */
+
+    input_file_2.setsubmitButtonListener(e -> {
+        // Collect input details from the input_file_2 class and send them to the controller
+        List<InputDB> inputList = new ArrayList<>();
+List<JTextField> courseFields = input_file_2.getCourseFields();
+List<JTextField> capacityFields = input_file_2.getCapacityFields();
+List<JTextField> preferenceFields = input_file_2.getPreferenceFields();
+
+for (int i = 0; i < courseFields.size(); i++) {
+    String courseText = courseFields.get(i).getText();
+    String capacityText = capacityFields.get(i).getText();
+    String preferenceText = preferenceFields.get(i).getText();
+
+    inputList.add(new InputDB(courseText, capacityText, preferenceText));
+}
+
+// Notify the controller to save the input details
+userController.saveInputDetails(inputList);
+
+    });
+    
+    
 
 
         // Set icon and frame properties

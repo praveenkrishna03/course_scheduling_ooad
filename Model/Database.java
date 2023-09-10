@@ -3,6 +3,8 @@ package Model;
 import java.io.*;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Database {
 
     
@@ -119,7 +121,7 @@ public class Database {
 
         public void saveInput(File file) {
             try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
-                for (InputDB input : InputCourseArrayList) {
+                for (InputDB input : InputArrayList) {
                     String save_data = input.getInputCourse() + ", " + input.getInputCapacity() + ", " + input.getInputPreferences();
                     bufferedWriter.write(save_data);
                     bufferedWriter.newLine();
@@ -128,6 +130,10 @@ public class Database {
                 e.printStackTrace();
             }
         }
+        
+
+        
+        
         
 
 
