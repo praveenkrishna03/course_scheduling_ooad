@@ -210,46 +210,55 @@ public class UserController {
         database.saveInput(databaseFile, input);
     }
     
-    public void Schedule(
-        List<String> inp_1_roomsList, 
-        List<Integer> inp_1_capList, 
-        List<String> inp_1_coursesList, 
-        List<String> inp_1_timingList, 
-        List<String> inp_2_coursesList, 
-        List<Integer> inp_2_capList, 
-        List<String> inp_2_prefList
-) {
+    public void Schedule(List<String> inp_1_roomsList, List<Integer> inp_1_capList, List<String> inp_1_coursesList, List<String> inp_1_timingList, List<String> inp_2_coursesList, List<Integer> inp_2_capList, List<String> inp_2_prefList) {
+    // Create lists for PG courses with and without preferences
     List<String> PG_with_no_pref_courseList = new ArrayList<>();
     List<Integer> PG_with_no_pref_capList = new ArrayList<>();
-    List<String> PG_with_no_pref_prefList = new ArrayList<>();
-
     List<String> PG_with_pref_courseList = new ArrayList<>();
     List<Integer> PG_with_pref_capList = new ArrayList<>();
     List<String> PG_with_pref_prefList = new ArrayList<>();
 
-    // Iterate through inp_2_coursesList and inp_2_prefList using a loop
+    // Create lists for UG courses with and without preferences
+    List<String> UG_with_no_pref_courseList = new ArrayList<>();
+    List<Integer> UG_with_no_pref_capList = new ArrayList<>();
+    List<String> UG_with_pref_courseList = new ArrayList<>();
+    List<Integer> UG_with_pref_capList = new ArrayList<>();
+    List<String> UG_with_pref_prefList = new ArrayList<>();
+
     for (int i = 0; i < inp_2_coursesList.size(); i++) {
         String course = inp_2_coursesList.get(i);
         String pref = inp_2_prefList.get(i);
         int cap = inp_2_capList.get(i);
 
-        // Check the conditions and move data to the appropriate lists
-        if (course.length() >= 3 && Character.isDigit(course.charAt(2)) && Integer.parseInt(course.substring(2, 3)) >= 6) {
-            if (pref.isEmpty()) {
-                PG_with_no_pref_courseList.add(course);
-                PG_with_no_pref_capList.add(cap);
-                PG_with_no_pref_prefList.add(pref);
-            } else {
-                PG_with_pref_courseList.add(course);
-                PG_with_pref_capList.add(cap);
-                PG_with_pref_prefList.add(pref);
-            }
+        char thirdChar = course.charAt(2);
+
+        if (thirdChar >= '6' && pref.isEmpty()) {
+            // PG with no preference
+            PG_with_no_pref_courseList.add(course);
+            PG_with_no_pref_capList.add(cap);
         } else {
+            // PG with preference
             PG_with_pref_courseList.add(course);
             PG_with_pref_capList.add(cap);
             PG_with_pref_prefList.add(pref);
         }
+
+        if (thirdChar < '6' && pref.isEmpty()) {
+            // UG with no preference
+            UG_with_no_pref_courseList.add(course);
+            UG_with_no_pref_capList.add(cap);
+        } else {
+            // UG with preference
+            UG_with_pref_courseList.add(course);
+            UG_with_pref_capList.add(cap);
+            UG_with_pref_prefList.add(pref);
+        }
     }
+
+    // Now, you have populated all the required lists based on conditions
+    // You can use these lists as needed in your code.
+}
+
 
     // Now, you have data split into different lists based on your conditions.
     // You can perform further operations as needed.
