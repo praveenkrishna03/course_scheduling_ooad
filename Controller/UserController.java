@@ -224,6 +224,8 @@ public class UserController {
     List<String> UG_with_pref_courseList = new ArrayList<>();
     List<Integer> UG_with_pref_capList = new ArrayList<>();
     List<List<String>> UG_with_pref_prefList = new ArrayList<>();
+    List<List<Integer>> PG_with_pref_list_num = new ArrayList<>();
+    List<List<Integer>> UG_with_pref_list_num = new ArrayList<>();
 
     for (int i = 0; i < inp_2_coursesList.size(); i++) {
         String course = inp_2_coursesList.get(i);
@@ -254,32 +256,149 @@ public class UserController {
             UG_with_pref_prefList.add(pref);
         }
 
-        List<List<Integer>> PG_with_pref_list_num = new ArrayList<>();
-    List<List<Integer>> UG_with_pref_list_num = new ArrayList<>();
+        
 
-    for (List<String> prefer : PG_with_pref_prefList) {
-        List<Integer> prefIndices = new ArrayList<>();
-        for (String timing : prefer) {
-            int index = inp_1_timingList.indexOf(timing);
-            if (index != -1) {
-                prefIndices.add(index);
+        for (List<String> prefer : PG_with_pref_prefList) {
+            List<Integer> prefIndices = new ArrayList<>();
+            for (String timing : prefer) {
+                int index = inp_1_timingList.indexOf(timing);
+                if (index != -1) {
+                    prefIndices.add(index);
+                }
+            }
+            PG_with_pref_list_num.add(prefIndices);
+        }
+        
+        for (List<String> prefer : UG_with_pref_prefList) {
+            List<Integer> prefIndices = new ArrayList<>();
+            for (String timing : prefer) {
+                int index = inp_1_timingList.indexOf(timing);
+                if (index != -1) {
+                    prefIndices.add(index);
+                }
+            }
+            UG_with_pref_list_num.add(prefIndices);
+        }
+
+    }
+
+    // Initialize your timetable matrix
+        String[][] timetable = new String[inp_1_roomsList.size()][inp_1_timingList.size()];
+        boolean[][] isSlotOccupied = new boolean[inp_1_roomsList.size()][inp_1_timingList.size()];
+
+
+
+        
+
+        // Loop for PG_with_pref_courses
+        for (int i = 0; i < PG_with_pref_courseList.size(); i++) {
+            String course = PG_with_pref_courseList.get(i);
+            int cap = PG_with_pref_capList.get(i);
+            List<Integer> prefIndices = PG_with_pref_list_num.get(i);
+
+            // Loop over inp_1_capList elements to find a room
+            for (int j = 0; j < inp_1_capList.size(); j++) {
+                int inpCap = inp_1_capList.get(j);
+
+                // Check if the course cap is less than or equal to inp_1_cap
+                if (cap <= inpCap) {
+                    // Loop over inp_1_timingList to find a suitable slot
+                    for (int k : prefIndices) {
+                        // Check if the slot is not occupied
+                        if (!isSlotOccupied[j][k]) {
+                            // Assign the course to the timetable and mark the slot as occupied
+                            timetable[j][k] = course;
+                            isSlotOccupied[j][k] = true;
+                            break;
+                        }
+                    }
+                }
             }
         }
-        PG_with_pref_list_num.add(prefIndices);
-    }
 
-    for (List<String> prefer : UG_with_pref_prefList) {
-        List<Integer> prefIndices = new ArrayList<>();
-        for (String timing : prefer) {
-            int index = inp_1_timingList.indexOf(timing);
-            if (index != -1) {
-                prefIndices.add(index);
+
+        for (int i = 0; i < UG_with_pref_courseList.size(); i++) {
+            String course = UG_with_pref_courseList.get(i);
+            int cap = UG_with_pref_capList.get(i);
+            List<Integer> prefIndices = UG_with_pref_list_num.get(i);
+
+            // Loop over inp_1_capList elements to find a room
+            for (int j = 0; j < inp_1_capList.size(); j++) {
+                int inpCap = inp_1_capList.get(j);
+
+                // Check if the course cap is less than or equal to inp_1_cap
+                if (cap <= inpCap) {
+                    // Loop over inp_1_timingList to find a suitable slot
+                    for (int k : prefIndices) {
+                        // Check if the slot is not occupied
+                        if (!isSlotOccupied[j][k]) {
+                            // Assign the course to the timetable and mark the slot as occupied
+                            timetable[j][k] = course;
+                            isSlotOccupied[j][k] = true;
+                            break;
+                        }
+                    }
+                }
             }
         }
-        UG_with_pref_list_num.add(prefIndices);
-    }
 
-    }
+
+        for (int i = 0; i < PG_with_no_pref_courseList.size(); i++) {
+            String course = PG_with_no_pref_courseList.get(i);
+            int cap = PG_with_no_pref_capList.get(i);
+            //List<Integer> prefIndices = PG_with_pref_list_num.get(i);
+        
+            // Loop over inp_1_capList elements to find a room
+            for (int j = 0; j < inp_1_capList.size(); j++) {
+                int inpCap = inp_1_capList.get(j);
+        
+                // Check if the course cap is less than or equal to inp_1_cap
+                if (cap <= inpCap) {
+                    // Loop over inp_1_timingList to find a suitable slot
+                    for (int k = 0; k < inp_1_timingList.size(); k++) {
+                        // Check if the slot is not occupied and matches preferences
+                        if (!isSlotOccupied[j][k]) {
+                            // Assign the course to the timetable and mark the slot as occupied
+                            timetable[j][k] = course;
+                            isSlotOccupied[j][k] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        for (int i = 0; i < UG_with_no_pref_courseList.size(); i++) {
+            String course = UG_with_no_pref_courseList.get(i);
+            int cap = UG_with_no_pref_capList.get(i);
+            //List<Integer> prefIndices = PG_with_pref_list_num.get(i);
+        
+            // Loop over inp_1_capList elements to find a room
+            for (int j = 0; j < inp_1_capList.size(); j++) {
+                int inpCap = inp_1_capList.get(j);
+        
+                // Check if the course cap is less than or equal to inp_1_cap
+                if (cap <= inpCap) {
+                    // Loop over inp_1_timingList to find a suitable slot
+                    for (int k = 0; k < inp_1_timingList.size(); k++) {
+                        // Check if the slot is not occupied and matches preferences
+                        if (!isSlotOccupied[j][k]) {
+                            // Assign the course to the timetable and mark the slot as occupied
+                            timetable[j][k] = course;
+                            isSlotOccupied[j][k] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+// Similar loops for UG_with_pref_courses, PG_with_no_pref_courses, UG_with_no_pref_courses
+
+
+
 
     // Now, you have populated all the required lists based on conditions
     // You can use these lists as needed in your code.
