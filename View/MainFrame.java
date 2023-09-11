@@ -61,6 +61,7 @@ public class MainFrame extends JFrame {
         home.setOutputFile1ButtonListener(e->{
 
             UserController control=new UserController(home, input_file_2);
+            cardLayout.show(contentPanel,"OutputFile1");
             //String[][] datas= control.getTimetable();
             //output_file_1 output_file_1=new output_file_1(datas);
 
@@ -97,12 +98,14 @@ public class MainFrame extends JFrame {
             String[][] datas= control.Schedule(inp_1_roomsList, inp_1_capList, inp_1_coursesList, inp_1_timingList, inp_2_coursesList, inp_2_capList, inp_2_prefList);
             //System.out.println(datas);
             //System.out.println(data[0].length);
-            output_file_1 output_file_1=new output_file_1(datas);
+            output_file_1 output_file_1=new output_file_1(datas,inp_1_roomsList,inp_1_timingList);
+
+            
 
             contentPanel.add(output_file_1,"OutputFile1");
 
             JOptionPane.showMessageDialog(null, "Timetable generation Done", "Done", JOptionPane.INFORMATION_MESSAGE);
-            cardLayout.show(contentPanel,"OutputFile1");
+            
         });
         
         

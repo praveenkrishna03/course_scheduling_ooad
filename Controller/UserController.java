@@ -60,8 +60,8 @@ public class UserController {
             String preferences = input_file_2.getPreferences().trim();
         
             // Simple validations
-            if (course.isEmpty() || capacity.isEmpty() || preferences.isEmpty()) {
-                JOptionPane.showMessageDialog(input_file_2, "All fields (Course, Capacity, Preferences) are required.", "Error",
+            if (course.isEmpty() || capacity.isEmpty() ) {
+                JOptionPane.showMessageDialog(input_file_2, "these fields (Course, Capacity) are required.", "Error",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -228,67 +228,83 @@ public class UserController {
     List<List<Integer>> PG_with_pref_list_num = new ArrayList<>();
     List<List<Integer>> UG_with_pref_list_num = new ArrayList<>();
 
+    
+
     for (int i = 0; i < inp_2_coursesList.size(); i++) {
         String course = inp_2_coursesList.get(i);
         List<String> pref = inp_2_prefList.get(i);
         int cap = inp_2_capList.get(i);
+        String preftest=pref.get(0);
 
-        char thirdChar = course.charAt(2);
-
-        if (thirdChar >= '6' && pref.isEmpty()) {
+        
+        
+    
+        char thirdChar =  course.charAt(2);
+    
+        if ((thirdChar == '6'|| thirdChar == '7'||thirdChar == '8'||thirdChar == '9') && pref.size()==0) {
             // PG with no preference
             PG_with_no_pref_courseList.add(course);
             PG_with_no_pref_capList.add(cap);
-        } else {
+        } else if (thirdChar == '6'|| thirdChar == '7'||thirdChar == '8'||thirdChar == '9') {
             // PG with preference
             PG_with_pref_courseList.add(course);
             PG_with_pref_capList.add(cap);
             PG_with_pref_prefList.add(pref);
         }
-
-        if (thirdChar < '6' && pref.isEmpty()) {
+    
+        if ((thirdChar == '1'|| thirdChar == '2'||thirdChar == '3'||thirdChar == '4'||thirdChar == '5') && pref.size()==0) {
             // UG with no preference
             UG_with_no_pref_courseList.add(course);
             UG_with_no_pref_capList.add(cap);
-        } else {
+        } else if (thirdChar == '1'|| thirdChar == '2'||thirdChar == '3'||thirdChar == '4'||thirdChar == '5') {
             // UG with preference
             UG_with_pref_courseList.add(course);
             UG_with_pref_capList.add(cap);
             UG_with_pref_prefList.add(pref);
         }
-
-        
-
-        for (List<String> prefer : PG_with_pref_prefList) {
-            List<Integer> prefIndices = new ArrayList<>();
-            for (String timing : prefer) {
-                int index = inp_1_timingList.indexOf(timing);
-                if (index != -1) {
-                    prefIndices.add(index);
-                }
-            }
-            PG_with_pref_list_num.add(prefIndices);
-        }
-        
-        for (List<String> prefer : UG_with_pref_prefList) {
-            List<Integer> prefIndices = new ArrayList<>();
-            for (String timing : prefer) {
-                int index = inp_1_timingList.indexOf(timing);
-                if (index != -1) {
-                    prefIndices.add(index);
-                }
-            }
-            UG_with_pref_list_num.add(prefIndices);
-        }
-
     }
+    
+    // Move these sections outside the loop
+    for (List<String> prefer : PG_with_pref_prefList) {
+        List<Integer> prefIndices = new ArrayList<>();
+        for (String timing : prefer) {
+            int index = inp_1_timingList.indexOf(timing);
+            if (index != -1) {
+                prefIndices.add(index);
+            }
+        }
+        PG_with_pref_list_num.add(prefIndices);
+    }
+    
+    for (List<String> prefer : UG_with_pref_prefList) {
+        List<Integer> prefIndices = new ArrayList<>();
+        for (String timing : prefer) {
+            int index = inp_1_timingList.indexOf(timing);
+            if (index != -1) {
+                prefIndices.add(index);
+            }
+        }
+        UG_with_pref_list_num.add(prefIndices);
+    }
+    
+
+    
+
+    
 
     // Initialize your timetable matrix
         String[][] timetable = new String[inp_1_roomsList.size()][inp_1_timingList.size()];
         boolean[][] isSlotOccupied = new boolean[inp_1_roomsList.size()][inp_1_timingList.size()];
+        /*int m=0;
+        for(String data:inp_1_roomsList){
+            System.out.println(data);
+            timetable[m][0]=data;
+            m++;
 
+        }*/
 
-
+        //List<String> datas=UG_with_pref_prefList.get(1);
+        
         
 
         // Loop for PG_with_pref_courses
@@ -373,7 +389,6 @@ public class UserController {
         for (int i = 0; i < UG_with_no_pref_courseList.size(); i++) {
             String course = UG_with_no_pref_courseList.get(i);
             int cap = UG_with_no_pref_capList.get(i);
-            //List<Integer> prefIndices = PG_with_pref_list_num.get(i);
         
             // Loop over inp_1_capList elements to find a room
             for (int j = 0; j < inp_1_capList.size(); j++) {
@@ -383,21 +398,38 @@ public class UserController {
                 if (cap <= inpCap) {
                     // Loop over inp_1_timingList to find a suitable slot
                     for (int k = 0; k < inp_1_timingList.size(); k++) {
-                        // Check if the slot is not occupied and matches preferences
-                        if (!isSlotOccupied[j][k]) {
+                        // Check if the slot is not occupied
+                        if (k >= 0 && k < inp_1_timingList.size() && !isSlotOccupied[j][k]) {
                             // Assign the course to the timetable and mark the slot as occupied
                             timetable[j][k] = course;
-                            isSlotOccupied[j][k] = true;
-                            break;
+                            
+                                isSlotOccupied[j][k] = true;
+                            
+                            break; // You may want to revise this break condition
                         }
                     }
                 }
             }
         }
+        
+        for(int i=0;i<timetable.length;i++){
+            for(int j=0;j<timetable[0].length;j++){
+            System.out.println(isSlotOccupied[i][j]);
+            }
+            System.out.println("  ");
+
+        }
 
 
 // Similar loops for UG_with_pref_courses, PG_with_no_pref_courses, UG_with_no_pref_courses
-
+        /* 
+        for (int i = 0; i < timetable.length; i++) {
+            for (int j = 0; j < timetable[i].length; j++) {
+                System.out.print(timetable[i][j] + " ");
+            }
+            System.out.println(); // Move to the next line after each row
+        }
+        */
 
 
         return timetable;

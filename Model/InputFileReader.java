@@ -135,15 +135,20 @@ public class InputFileReader {
     
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(": "); // Split by ": " to match the specified format
-                String[] time_parts = line.split(",");
+                
             
                 if (parts.length >= 3) {
                     String course = parts[0].trim();
                     String capacityStr = parts[1].trim();
+                    String[] time_parts = parts[2].split(",");
                     String[] preference = new String[time_parts.length];
-            
+                    //for(int i=0;i<preference.length;i++){
+                    //    System.out.println(preference[i]);
+                    //}
+                    
                     // Copy elements from time_parts to preference
                     for (int i = 0; i < time_parts.length; i++) {
+                        
                         preference[i] = time_parts[i].trim();
                     }
             

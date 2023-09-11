@@ -8,19 +8,27 @@ import java.util.List;
 public class output_file_1 extends JPanel {
     private DefaultTableModel tableModel;
 
-    public output_file_1(String[][] data) {
+    public output_file_1(String[][] data,List<String>inp_1_roomList,List<String> inp_1_timing) {
         if (data != null && data.length > 0 && data[0] != null && data[0].length > 0) {
-            int numRows = data.length + 1;
-            int numCols = data[0].length + 1;
+            int numRows = data.length+1;
+            int numCols = data[0].length+1;
     
             tableModel = new DefaultTableModel(numRows, numCols);
     
             for (int i = 1; i < numCols; i++) {
-                tableModel.setValueAt(data[0][i - 1], 0, i);
+                tableModel.setValueAt(inp_1_timing.get(i-1), 0, i);
             }
     
             for (int i = 1; i < numRows; i++) {
-                tableModel.setValueAt(data[i - 1][0], i, 0);
+                tableModel.setValueAt(inp_1_roomList.get(i-1), i, 0);
+            }
+
+            for(int i=1;i<numRows;i++){
+                for(int j=1;j<numCols;j++) {
+                    
+                    tableModel.setValueAt(data[i-1][j-1],i,j);
+
+                }
             }
     
             JTable table = new JTable(tableModel);
