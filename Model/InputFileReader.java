@@ -43,7 +43,7 @@ public class InputFileReader {
         // Check if capacity is a number and within the range 10 to 90
         try {
             int cap = Integer.parseInt(capacity);
-            return cap >= 10 && cap <= 90;
+            return cap >= 10 ;
         } catch (NumberFormatException e) {
             return false;
         }

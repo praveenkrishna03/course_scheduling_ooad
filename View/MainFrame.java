@@ -33,7 +33,7 @@ public class MainFrame extends JFrame {
         
         input_file_1 input_file_1 = new input_file_1();
         input_file_2 input_file_2 = new input_file_2();
-        
+        //output_file_1 outputfile1=new output_file_1(null, null, null);
         
         
         JScrollPane scrollPane = new JScrollPane(contentPanel);
@@ -58,6 +58,7 @@ public class MainFrame extends JFrame {
         home.setInputFile1ButtonListener(e -> cardLayout.show(contentPanel, "InputFile1"));
         home.setInputFile2ButtonListener(e->cardLayout.show(contentPanel, "InputFile2"));
         input_file_2.goback(e->cardLayout.show(contentPanel, "home"));
+        
         home.setOutputFile1ButtonListener(e->{
 
             UserController control=new UserController(home, input_file_2);
@@ -99,7 +100,7 @@ public class MainFrame extends JFrame {
             //System.out.println(datas);
             //System.out.println(data[0].length);
             output_file_1 output_file_1=new output_file_1(datas,inp_1_roomsList,inp_1_timingList);
-
+            //output_file_1.setbackButtonListener(e -> cardLayout.show(contentPanel, "home"));
             
 
             contentPanel.add(output_file_1,"OutputFile1");
@@ -107,7 +108,7 @@ public class MainFrame extends JFrame {
             JOptionPane.showMessageDialog(null, "Timetable generation Done", "Done", JOptionPane.INFORMATION_MESSAGE);
             
         });
-        
+
         
 
         input_file_1.setsubmitButtonListener(e -> {

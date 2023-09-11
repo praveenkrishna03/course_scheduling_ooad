@@ -1,9 +1,9 @@
 rooms
 101:35
-102:80
+102:50
 103:90
-104:70
+104:140
 courses
-cs201,cs202,cs203,cs204,cs205,
+cs201,cs202,cs203,cs204,cs205,cs206,
 timing
 MWF09,TT09:10,TT07,MWF11,

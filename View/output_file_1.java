@@ -3,10 +3,12 @@ package View;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class output_file_1 extends JPanel {
     private DefaultTableModel tableModel;
+    JButton backButton;
 
     public output_file_1(String[][] data,List<String>inp_1_roomList,List<String> inp_1_timing) {
         if (data != null && data.length > 0 && data[0] != null && data[0].length > 0) {
@@ -37,15 +39,25 @@ public class output_file_1 extends JPanel {
             table.getTableHeader().setVisible(false);
     
             JScrollPane scrollPane = new JScrollPane(table);
-    
+
+            backButton = new JButton("Back");
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(backButton);
             setLayout(new BorderLayout());
-            add(scrollPane, BorderLayout.CENTER);
+            add(buttonPanel, BorderLayout.CENTER);
+            add(scrollPane, BorderLayout.SOUTH);
+            
         } else {
             System.out.println("it is empty");
             // Handle the case when data is null or empty
             // You may want to display an error message or handle it differently
             // For simplicity, this example does nothing in case of empty data.
         }
+    }
+
+    public void setbackButtonListener(ActionListener listener) {
+        // Assuming you have a JButton named inputFile1Button
+        backButton.addActionListener(listener);
     }
     
     

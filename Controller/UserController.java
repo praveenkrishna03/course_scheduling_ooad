@@ -241,7 +241,7 @@ public class UserController {
     
         char thirdChar =  course.charAt(2);
     
-        if ((thirdChar == '6'|| thirdChar == '7'||thirdChar == '8'||thirdChar == '9') && pref.size()==0) {
+        if ((thirdChar == '6'|| thirdChar == '7'||thirdChar == '8'||thirdChar == '9') && preftest.isEmpty()) {
             // PG with no preference
             PG_with_no_pref_courseList.add(course);
             PG_with_no_pref_capList.add(cap);
@@ -252,7 +252,7 @@ public class UserController {
             PG_with_pref_prefList.add(pref);
         }
     
-        if ((thirdChar == '1'|| thirdChar == '2'||thirdChar == '3'||thirdChar == '4'||thirdChar == '5') && pref.size()==0) {
+        if ((thirdChar == '1'|| thirdChar == '2'||thirdChar == '3'||thirdChar == '4'||thirdChar == '5') && preftest.isEmpty()) {
             // UG with no preference
             UG_with_no_pref_courseList.add(course);
             UG_with_no_pref_capList.add(cap);
@@ -287,7 +287,10 @@ public class UserController {
         UG_with_pref_list_num.add(prefIndices);
     }
     
+    for(String data:UG_with_no_pref_courseList){
+            System.out.println(data);
 
+        }
     
 
     
@@ -307,25 +310,26 @@ public class UserController {
         
         
 
-        // Loop for PG_with_pref_courses
         for (int i = 0; i < PG_with_pref_courseList.size(); i++) {
             String course = PG_with_pref_courseList.get(i);
             int cap = PG_with_pref_capList.get(i);
             List<Integer> prefIndices = PG_with_pref_list_num.get(i);
+            boolean forpref=false;
 
-            // Loop over inp_1_capList elements to find a room
             for (int j = 0; j < inp_1_capList.size(); j++) {
                 int inpCap = inp_1_capList.get(j);
 
-                // Check if the course cap is less than or equal to inp_1_cap
                 if (cap <= inpCap) {
-                    // Loop over inp_1_timingList to find a suitable slot
                     for (int k : prefIndices) {
-                        // Check if the slot is not occupied
                         if (!isSlotOccupied[j][k]) {
-                            // Assign the course to the timetable and mark the slot as occupied
                             timetable[j][k] = course;
-                            isSlotOccupied[j][k] = true;
+                            for(int l=0;l<inp_1_roomsList.size();l++){
+                                isSlotOccupied[l][k] = true;
+                            }
+                            forpref=true;
+                            break;
+                        }
+                        if(forpref==true){
                             break;
                         }
                     }
@@ -338,20 +342,24 @@ public class UserController {
             String course = UG_with_pref_courseList.get(i);
             int cap = UG_with_pref_capList.get(i);
             List<Integer> prefIndices = UG_with_pref_list_num.get(i);
+            boolean forpref=false;
 
-            // Loop over inp_1_capList elements to find a room
             for (int j = 0; j < inp_1_capList.size(); j++) {
                 int inpCap = inp_1_capList.get(j);
 
-                // Check if the course cap is less than or equal to inp_1_cap
                 if (cap <= inpCap) {
-                    // Loop over inp_1_timingList to find a suitable slot
                     for (int k : prefIndices) {
-                        // Check if the slot is not occupied
                         if (!isSlotOccupied[j][k]) {
-                            // Assign the course to the timetable and mark the slot as occupied
                             timetable[j][k] = course;
-                            isSlotOccupied[j][k] = true;
+
+                            for(int l=0;l<inp_1_roomsList.size();l++){
+                                isSlotOccupied[l][k] = true;
+                            }
+                            forpref=true;
+                            
+                            break;
+                        }
+                        if(forpref==true){
                             break;
                         }
                     }
@@ -363,21 +371,22 @@ public class UserController {
         for (int i = 0; i < PG_with_no_pref_courseList.size(); i++) {
             String course = PG_with_no_pref_courseList.get(i);
             int cap = PG_with_no_pref_capList.get(i);
-            //List<Integer> prefIndices = PG_with_pref_list_num.get(i);
+            boolean fornopref=false;
         
-            // Loop over inp_1_capList elements to find a room
             for (int j = 0; j < inp_1_capList.size(); j++) {
                 int inpCap = inp_1_capList.get(j);
         
-                // Check if the course cap is less than or equal to inp_1_cap
                 if (cap <= inpCap) {
-                    // Loop over inp_1_timingList to find a suitable slot
                     for (int k = 0; k < inp_1_timingList.size(); k++) {
-                        // Check if the slot is not occupied and matches preferences
                         if (!isSlotOccupied[j][k]) {
-                            // Assign the course to the timetable and mark the slot as occupied
                             timetable[j][k] = course;
-                            isSlotOccupied[j][k] = true;
+                            for(int l=0;l<inp_1_roomsList.size();l++){
+                                isSlotOccupied[l][k] = true;
+                            }
+                            fornopref=true;
+                            break;
+                        }
+                        if(fornopref==true){
                             break;
                         }
                     }
@@ -389,29 +398,28 @@ public class UserController {
         for (int i = 0; i < UG_with_no_pref_courseList.size(); i++) {
             String course = UG_with_no_pref_courseList.get(i);
             int cap = UG_with_no_pref_capList.get(i);
-        
-            // Loop over inp_1_capList elements to find a room
+            boolean fornopref=false;
             for (int j = 0; j < inp_1_capList.size(); j++) {
                 int inpCap = inp_1_capList.get(j);
         
-                // Check if the course cap is less than or equal to inp_1_cap
                 if (cap <= inpCap) {
-                    // Loop over inp_1_timingList to find a suitable slot
                     for (int k = 0; k < inp_1_timingList.size(); k++) {
-                        // Check if the slot is not occupied
                         if (k >= 0 && k < inp_1_timingList.size() && !isSlotOccupied[j][k]) {
-                            // Assign the course to the timetable and mark the slot as occupied
                             timetable[j][k] = course;
-                            
-                                isSlotOccupied[j][k] = true;
-                            
-                            break; // You may want to revise this break condition
+                            for(int l=0;l<inp_1_roomsList.size();l++){
+                                isSlotOccupied[l][k] = true;
+                                fornopref=true;
+                            }
+                            break; 
+                        }
+                        if(fornopref==true){
+                            break;
                         }
                     }
                 }
             }
         }
-        
+        /* 
         for(int i=0;i<timetable.length;i++){
             for(int j=0;j<timetable[0].length;j++){
             System.out.println(isSlotOccupied[i][j]);
@@ -419,6 +427,7 @@ public class UserController {
             System.out.println("  ");
 
         }
+        */
 
 
 // Similar loops for UG_with_pref_courses, PG_with_no_pref_courses, UG_with_no_pref_courses
@@ -433,14 +442,10 @@ public class UserController {
 
 
         return timetable;
-    // Now, you have populated all the required lists based on conditions
-    // You can use these lists as needed in your code.
     }
 
 
 
-    // Now, you have data split into different lists based on your conditions.
-    // You can perform further operations as needed.
 }
 
      
