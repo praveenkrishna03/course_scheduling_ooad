@@ -130,7 +130,7 @@ public class InputFileReader {
             String line;
     
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(": "); // Split by ": " to match the specified format
+                String[] parts = line.split("; "); // Split by ": " to match the specified format
                 
             
                 if (parts.length >= 3) {
