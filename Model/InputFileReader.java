@@ -19,7 +19,6 @@ public class InputFileReader {
     private List<List<String>> inp_2_pref = new ArrayList<>();
 
     private boolean isValidRoomNumber(String roomNumber) {
-        // Check if roomNumber is a number and within the range 100 to 900
         try {
             int room = Integer.parseInt(roomNumber);
             return room >= 100 && room <= 900;
@@ -28,14 +27,12 @@ public class InputFileReader {
         }
     }
     private boolean validateInputCourse(String course) {
-        // Use contains method to check if the course exists in inp_1_room list
         return inp_1_rooms.contains(course);
     }
     
     
 
     private boolean isValidTiming(String timing) {
-        // Check if the timing matches the specified format
         return timing.matches("^(MWF\\d{2}(:\\d{2})?|TT\\d{2}(:\\d{2})?)$|^\\d{1,2}$");
     }
 
@@ -50,7 +47,6 @@ public class InputFileReader {
     }
 
     private boolean isValidCourse(String course) {
-        // Check if course has 5 characters, starting with 'c' and 's', and followed by 3 digits
         return course.length() == 5 && course.charAt(0) == 'c' && course.charAt(1) == 's' && course.substring(2).matches("\\d{3}");
     }
     
