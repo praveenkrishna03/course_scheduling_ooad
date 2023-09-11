@@ -130,7 +130,7 @@ public class Database {
 
                 if(inputentry<20){
 
-                String saveData = input.getInputCourse() + ": " + input.getInputCapacity() + ": " + input.getInputPreferences()+"  ";
+                String saveData = input.getInputCourse() + "; " + input.getInputCapacity() + "; " + input.getInputPreferences()+"  ";
                 bufferedWriter.write(saveData);
                 bufferedWriter.newLine();
                 inputentry++;
